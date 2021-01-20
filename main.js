@@ -52,23 +52,23 @@ $('#inputEdit').on('keypress', function (e) {
 });
 
 function chooseCheckBox(id) {
+
     textCheckboxId = 'text__';
     textCheckboxId += id;
-    if ($('#' + id)[0].checked === true)
+    if ($('#' + id).is(':checked') === true)
         $('#' + textCheckboxId).attr('class', 'taskTextChoesed');
     else
         $('#' + textCheckboxId).attr('class', 'taskText');
     let flagForClear = false;
 
-    console.log('$(: ', $('li'));
     for (let i = 0; i < $('li').length; i++)
-        if ($('checkbox' + i).checked === true)
+        if ($('#' + id).is(':checked')=== true)
             flagForClear = true;
+            
     if (flagForClear === true)
         $('#clear').html('Clear completed');
     else
         $('#clear').html('');
-
     countList();
 }
 
@@ -93,10 +93,9 @@ $('#icon').click(function () {
     console.log($('li'));
     if (flagCheck === true) {
 
-        for (let i = 0; i < $('li').length; i++) {
+        for (let i = 0; i < checkId; i++) {
 
             $('#checkbox' + i).prop('checked', false);
-            console.log('', $('#checkbox' + i));
             $('#text__checkbox' + i).attr('class', 'taskText');
         }
     } else {
@@ -114,22 +113,27 @@ function deleteStr(id) {
     if ($('#luID').html() === '') {
         $('#footerID').html('');
         $('#icon').html('');
+        checkId = 0;
     }
     countList();
 };
 
 function delCompleted() {
-
-    for (let i = 0; i < $('lu')[0].children.length; i++) {
-        if ($('#checkbox' + i).is(':checked') === true) {
+    console.log('search', );
+    for (let i = 0; i < checkId; i++) {
+        if ($('li').eq(i).children().eq(0).children().eq(0).is(':checked') === true) {           
             $('li').eq(i).remove();
             i--;
         }
     }
+    flagCheck = !flagCheck;
+
+ 
     $('#clear').html('');
     if ($('#luID').html() === '') {
         $('#footerID').html('');
         $('#icon').html('');
+        checkId = 0;
     }
 };
 
