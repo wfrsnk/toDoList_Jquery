@@ -3,7 +3,6 @@ var countText = ' item left';
 var flagCheck = true;
 
 $('#inputEdit').click(function () {
-    console.log(12324);
     $('.select').addClass('is-active');
 });
 
@@ -11,17 +10,15 @@ $('#inputEdit').on('keypress', function (e) {
 
     if (e.which === 13 && $('#inputEdit').val() != '') {
         let flagRepet = false;
-        for (let i = 0; i < $('li').length; i++) {
-            console.log($('#text__checkbox'+i).html())
-            if ($('#inputEdit').val() === $('#text__checkbox'+i).html())
+        for (let i = $('li').length-1; i>=0; i--) {
+            if ($('#inputEdit').val() === $('#text__checkbox' + i).html())
                 flagRepet = true;
         }
-        if (flagRepet === true){
+        if (flagRepet === true) {
             $('#inputEdit').val('');
-        }
-        else{
+        } else {
             $('div.select__icon').html('<img src="./icon.png">');
-    
+
             $('lu').append($('lu'), `<li class="select__item">
             <div class="round">
             <input  type="checkbox" onclick = "chooseCheckBox(id)" id="checkbox` + checkId + `"/>
@@ -40,13 +37,13 @@ $('#inputEdit').on('keypress', function (e) {
             </div>
             <div class="backDiv1"></div>
             <div class="backDiv2"></div>`);
-    
+
             $('#inputEdit').val('');
             countList();
             checkId++;
             $('#all').css('border', '1px solid #d19090');
         }
-        
+
 
     }
 });
@@ -61,10 +58,10 @@ function chooseCheckBox(id) {
         $('#' + textCheckboxId).attr('class', 'taskText');
     let flagForClear = false;
 
-    for (let i = 0; i < $('li').length; i++)
-        if ($('#' + id).is(':checked')=== true)
+    for (let i = $('li').length-1; i>=0; i--)
+        if ($('li').eq(i).children().eq(0).children().eq(0).is(':checked') === true)
             flagForClear = true;
-            
+
     if (flagForClear === true)
         $('#clear').html('Clear completed');
     else
@@ -75,9 +72,9 @@ function chooseCheckBox(id) {
 function countList() {
     let count = 0;
 
-    for (let i = 0; i < $('li').length; i++)
-         if ($('#checkbox' + i).is(':checked') === false && $('li').eq(i).css('display') != 'none')
-             count++;
+    for (let i = $('li').length-1; i>=0; i--)
+        if ($('#checkbox' + i).is(':checked') === false && $('li').eq(i).css('display') != 'none')
+            count++;
 
     if ($('#footerID').html() != '') {
         if (count === 1)
@@ -90,18 +87,22 @@ function countList() {
 
 $('#icon').click(function () {
     flagCheck = !flagCheck;
-    console.log($('li'));
+
+    console.log();
+
     if (flagCheck === true) {
 
-        for (let i = 0; i < checkId; i++) {
-
-            $('#checkbox' + i).prop('checked', false);
-            $('#text__checkbox' + i).attr('class', 'taskText');
+        for (let i = $('li').length-1; i>=0; i--) {
+            console.log('i click: ', i);
+        
+            $('li').eq(i).children().eq(0).children().eq(0).prop('checked', false);
+            $('li').eq(i).children().eq(1).attr('class', 'taskText');
         }
     } else {
-        for (let i = 0; i < $('li').length; i++) {
-            $('#checkbox' + i).prop('checked', true);
-            $('#text__checkbox' + i).attr('class', 'taskTextChoesed');
+        for (let i = $('li').length-1; i>=0; i--) {
+            console.log('i click: ', i);
+            $('li').eq(i).children().eq(0).children().eq(0).prop('checked', true);
+            $('li').eq(i).children().eq(1).attr('class', 'taskTextChoesed');
         }
     }
     $('#clear').html('Clear completed');
@@ -109,7 +110,7 @@ $('#icon').click(function () {
 });
 
 function deleteStr(id) {
-    $('#'+id).parent().remove();
+    $('#' + id).parent().remove();
     if ($('#luID').html() === '') {
         $('#footerID').html('');
         $('#icon').html('');
@@ -119,17 +120,31 @@ function deleteStr(id) {
 };
 
 function delCompleted() {
-    console.log('search', );
-    for (let i = 0; i < checkId; i++) {
+
+    // $('li').forEach(element => {
+    //     if (element.children().eq(0).children().eq(0).is(':checked') === true)            
+    //         element.remove();
+    // });
+    console.log('/n');
+    for (let i = $('li').length-1; i>=0; i--) {
+        console.log('i: ', i);
         if ($('li').eq(i).children().eq(0).children().eq(0).is(':checked') === true) {           
             $('li').eq(i).remove();
-            i--;
         }
     }
     flagCheck = !flagCheck;
+    let flagForClear = false;
+    for (let i = $('li').length-1; i>=0; i--)
+     
+        if ($('li').eq(i).children().eq(0).children().eq(0).is(':checked') === true)
+            flagForClear = true;
 
- 
-    $('#clear').html('');
+    if (flagForClear === true)
+        $('#clear').html('Clear completed');
+    else
+        $('#clear').html('');
+
+
     if ($('#luID').html() === '') {
         $('#footerID').html('');
         $('#icon').html('');
