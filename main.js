@@ -62,7 +62,7 @@ function chooseCheckBox(id) {
 
     console.log('$(: ', $('li'));
     for (let i = 0; i < $('li').length; i++)
-        if ($('li')[i].firstElementChild.firstElementChild.checked === true)
+        if ($('checkbox' + i).checked === true)
             flagForClear = true;
     if (flagForClear === true)
         $('#clear').html('Clear completed');
@@ -74,9 +74,10 @@ function chooseCheckBox(id) {
 
 function countList() {
     let count = 0;
+
     for (let i = 0; i < $('li').length; i++)
-        if ($('li')[i].firstElementChild.firstElementChild.checked === false && $('li')[i].style.display != 'none')
-            count++;
+         if ($('#checkbox' + i).is(':checked') === false && $('li').eq(i).css('display') != 'none')
+             count++;
 
     if ($('#footerID').html() != '') {
         if (count === 1)
@@ -94,12 +95,13 @@ $('#icon').click(function () {
 
         for (let i = 0; i < $('li').length; i++) {
 
-            $('li')[i].firstElementChild.firstElementChild.checked = false;
+            $('#checkbox' + i).prop('checked', false);
+            console.log('', $('#checkbox' + i));
             $('#text__checkbox' + i).attr('class', 'taskText');
         }
     } else {
         for (let i = 0; i < $('li').length; i++) {
-            $('li')[i].firstElementChild.firstElementChild.checked = true;
+            $('#checkbox' + i).prop('checked', true);
             $('#text__checkbox' + i).attr('class', 'taskTextChoesed');
         }
     }
@@ -119,7 +121,7 @@ function deleteStr(id) {
 function delCompleted() {
 
     for (let i = 0; i < $('lu')[0].children.length; i++) {
-        if ($('lu')[0].children[i].firstElementChild.firstElementChild.checked === true) {
+        if ($('#checkbox' + i).is(':checked') === true) {
             $('li').eq(i).remove();
             i--;
         }
@@ -134,7 +136,7 @@ function delCompleted() {
 $(document).on('click', '#active', function () {
     console.log('click active');
     for (let i = 0; i < $('li').length; i++) {
-        let flag = $('li')[i].firstElementChild.firstElementChild.checked;
+        let flag = $('#checkbox' + i).is(':checked');
         if (flag === true) {
             console.log(`('li')[i]: `, $('li')[i]);
             $('li').eq(i).css('display', 'none');
@@ -162,7 +164,7 @@ $(document).on('click', '#all', function () {
 $(document).on('click', '#completed', function () {
     console.log('click completed');
     for (let i = 0; i < $('li').length; i++) {
-        let flag = $('li')[i].firstElementChild.firstElementChild.checked
+        let flag = $('#checkbox' + i).is(':checked')
         if (flag === false)
             $('li').eq(i).css('display', 'none');
         else
