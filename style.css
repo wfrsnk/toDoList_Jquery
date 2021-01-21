@@ -103,12 +103,12 @@ body {
 }
 
 .taskTextChoesed {
-  overflow-wrap: break-word;
   text-decoration: line-through;
   color: #8a8a8a;
   padding-left: 20px;
   padding-top: 12px;
   width: 320px;
+  overflow-wrap: break-word;
 }
 
 

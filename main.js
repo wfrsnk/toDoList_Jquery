@@ -1,6 +1,6 @@
 var checkId = 0;
 var countText = ' item left';
-var flagCheck = true;
+
 
 $('#inputEdit').click(function () {
     $('.select').addClass('is-active');
@@ -10,7 +10,7 @@ $('#inputEdit').on('keypress', function (e) {
 
     if (e.which === 13 && $('#inputEdit').val() != '') {
         let flagRepet = false;
-        for (let i = $('li').length-1; i>=0; i--) {
+        for (let i = $('li').length - 1; i >= 0; i--) {
             if ($('#inputEdit').val() === $('#text__checkbox' + i).html())
                 flagRepet = true;
         }
@@ -48,6 +48,10 @@ $('#inputEdit').on('keypress', function (e) {
     }
 });
 
+function getCheckbox(i) {
+    return $('li').eq(i).children().eq(0).children().eq(0)
+}
+
 function chooseCheckBox(id) {
 
     textCheckboxId = 'text__';
@@ -58,8 +62,8 @@ function chooseCheckBox(id) {
         $('#' + textCheckboxId).attr('class', 'taskText');
     let flagForClear = false;
 
-    for (let i = $('li').length-1; i>=0; i--)
-        if ($('li').eq(i).children().eq(0).children().eq(0).is(':checked') === true)
+    for (let i = $('li').length - 1; i >= 0; i--)
+        if (getCheckbox(i).eq(0).is(':checked') === true)
             flagForClear = true;
 
     if (flagForClear === true)
@@ -72,7 +76,7 @@ function chooseCheckBox(id) {
 function countList() {
     let count = 0;
 
-    for (let i = $('li').length-1; i>=0; i--)
+    for (let i = $('li').length - 1; i >= 0; i--)
         if ($('#checkbox' + i).is(':checked') === false && $('li').eq(i).css('display') != 'none')
             count++;
 
@@ -86,23 +90,25 @@ function countList() {
 };
 
 $('#icon').click(function () {
-    flagCheck = !flagCheck;
-
-    console.log();
-
+    let flagCheck = true;
+    for (let i = $('li').length - 1; i >= 0; i--) {
+        if (getCheckbox(i).is(':checked') != true) {
+            flagCheck = false;
+        }
+    }
     if (flagCheck === true) {
-
-        for (let i = $('li').length-1; i>=0; i--) {
-            console.log('i click: ', i);
-        
-            $('li').eq(i).children().eq(0).children().eq(0).prop('checked', false);
+        for (let i = $('li').length - 1; i >= 0; i--) {
+            getCheckbox(i).prop('checked', false);
             $('li').eq(i).children().eq(1).attr('class', 'taskText');
+            //$('li').eq(i).children().eq(1).toggleClass('taskTextChoesed');
+
         }
     } else {
-        for (let i = $('li').length-1; i>=0; i--) {
+        for (let i = $('li').length - 1; i >= 0; i--) {
             console.log('i click: ', i);
-            $('li').eq(i).children().eq(0).children().eq(0).prop('checked', true);
-            $('li').eq(i).children().eq(1).attr('class', 'taskTextChoesed');
+            getCheckbox(i).prop('checked', true);
+            $('li').eq(i).children().eq(1).attr('class', 'taskTextChoesed')
+            //$('li').eq(i).children().eq(1).toggleClass('taskTextChoesed');
         }
     }
     $('#clear').html('Clear completed');
@@ -126,17 +132,16 @@ function delCompleted() {
     //         element.remove();
     // });
     console.log('/n');
-    for (let i = $('li').length-1; i>=0; i--) {
-        console.log('i: ', i);
-        if ($('li').eq(i).children().eq(0).children().eq(0).is(':checked') === true) {           
+
+    for (let i = $('li').length - 1; i >= 0; i--) {
+        if (getCheckbox(i).is(':checked') === true) {
             $('li').eq(i).remove();
         }
     }
-    flagCheck = !flagCheck;
     let flagForClear = false;
-    for (let i = $('li').length-1; i>=0; i--)
-     
-        if ($('li').eq(i).children().eq(0).children().eq(0).is(':checked') === true)
+    for (let i = $('li').length - 1; i >= 0; i--)
+
+        if (getCheckbox(i).is(':checked') === true)
             flagForClear = true;
 
     if (flagForClear === true)
