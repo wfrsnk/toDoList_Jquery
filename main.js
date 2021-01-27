@@ -56,10 +56,10 @@ function chooseCheckBox(id) {
 
     textCheckboxId = 'text__';
     textCheckboxId += id;
-    if ($('#' + id).is(':checked') === true)
-        $('#' + textCheckboxId).attr('class', 'taskTextChoesed');
-    else
-        $('#' + textCheckboxId).attr('class', 'taskText');
+    // if ( === true)
+        $('#' + textCheckboxId).toggleClass('taskTextChoesed', $('#' + id).is(':checked'));
+    // else
+    //     $('#' + textCheckboxId).attr('class', 'taskText');
     let flagForClear = false;
 
     for (let i = $('li').length - 1; i >= 0; i--)
@@ -99,16 +99,16 @@ $('#icon').click(function () {
     if (flagCheck === true) {
         for (let i = $('li').length - 1; i >= 0; i--) {
             getCheckbox(i).prop('checked', false);
-            $('li').eq(i).children().eq(1).attr('class', 'taskText');
-            //$('li').eq(i).children().eq(1).toggleClass('taskTextChoesed');
+            //$('li').eq(i).children().eq(1).attr('class', 'taskText');
+            $('li').eq(i).children().eq(1).toggleClass('taskTextChoesed', !flagCheck);
 
         }
     } else {
         for (let i = $('li').length - 1; i >= 0; i--) {
             console.log('i click: ', i);
             getCheckbox(i).prop('checked', true);
-            $('li').eq(i).children().eq(1).attr('class', 'taskTextChoesed')
-            //$('li').eq(i).children().eq(1).toggleClass('taskTextChoesed');
+            //$('li').eq(i).children().eq(1).attr('class', 'taskTextChoesed')
+            $('li').eq(i).children().eq(1).toggleClass('taskTextChoesed', !flagCheck);
         }
     }
     $('#clear').html('Clear completed');

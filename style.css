@@ -214,6 +214,7 @@ button:focus {
   display: flex;
   flex-flow: column;
   align-items: center;
+  background-color: #e2e2e2;
 }
 
 li:hover > .close {
